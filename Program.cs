@@ -36,10 +36,13 @@ namespace CompilerFinal
 
             }
 
-            if (lt[0].Kind == TipoToken.NumberToken && lt[2].Kind == TipoToken.PlusToken && lt[4].Kind == TipoToken.NumberToken)
-            {
-                Console.WriteLine("Es una suma!");
-            }
+            var analizador = new AnalizadorSemantico(lt);
+            Console.WriteLine(analizador.IsVariableDeclaration());
+
+            //if (lt[0].Kind == TipoToken.NumberToken && lt[2].Kind == TipoToken.PlusToken && lt[4].Kind == TipoToken.NumberToken)
+            //{
+            //    Console.WriteLine("Es una suma!");
+            //}
         }
     }
 }
