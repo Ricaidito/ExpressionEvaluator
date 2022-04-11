@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -8,21 +7,22 @@ namespace CompilerFinal
     public class AnalizadorSemantico
     {
         List<Token> _tokens = new List<Token>();
+        private int _variableType;
 
         public AnalizadorSemantico(List<Token> tokenList)
         {
             _tokens = tokenList.Where(t => t.Kind != TipoToken.WhitespaceToken && t.Kind != TipoToken.EndOfFileToken).ToList();
+            _variableType = 0;
         }
-
-        public void EliminateEOF()
-        {
-            _tokens = _tokens.Where(t => t.Kind != TipoToken.WhitespaceToken && t.Kind != TipoToken.EndOfFileToken).ToList();
-        }
-
-        public void PrintTokens() => _tokens.ForEach(t => Console.WriteLine(t.Kind));
 
         public bool IsMathOperation()
         {
+            var boolOcurrs = _tokens.Where(t => t.Kind == TipoToken.GreaterToken || t.Kind == TipoToken.LessToken || t.Kind == TipoToken.AmpersandToken || t.Kind == TipoToken.BarrierToken).ToList();
+            if (boolOcurrs.Count >= 1)
+            {
+                return false;
+            }
+
             if (_tokens.First().Kind != TipoToken.NumberToken || _tokens.Last().Kind != TipoToken.NumberToken)
             {
                 return false;
@@ -47,7 +47,10 @@ namespace CompilerFinal
                         break;
                     }
 
-                    if (_tokens[i + 1].Kind == TipoToken.PlusToken || _tokens[i + 1].Kind == TipoToken.MinusToken || _tokens[i + 1].Kind == TipoToken.StarToken || _tokens[i + 1].Kind == TipoToken.SlashToken)
+                    if (_tokens[i + 1].Kind == TipoToken.PlusToken ||
+                        _tokens[i + 1].Kind == TipoToken.MinusToken ||
+                        _tokens[i + 1].Kind == TipoToken.StarToken ||
+                        _tokens[i + 1].Kind == TipoToken.SlashToken)
                     {
                         continue;
                     }
@@ -59,7 +62,10 @@ namespace CompilerFinal
 
                 }
 
-                else if (_tokens[i].Kind == TipoToken.PlusToken || _tokens[i].Kind == TipoToken.MinusToken || _tokens[i].Kind == TipoToken.StarToken || _tokens[i].Kind == TipoToken.SlashToken)
+                else if (_tokens[i].Kind == TipoToken.PlusToken ||
+                    _tokens[i].Kind == TipoToken.MinusToken ||
+                    _tokens[i].Kind == TipoToken.StarToken ||
+                    _tokens[i].Kind == TipoToken.SlashToken)
                 {
                     oper++;
 
@@ -87,6 +93,13 @@ namespace CompilerFinal
 
         public bool IsMathOperation(List<Token> lt)
         {
+
+            var boolOcurrs = lt.Where(t => t.Kind == TipoToken.GreaterToken || t.Kind == TipoToken.LessToken || t.Kind == TipoToken.AmpersandToken || t.Kind == TipoToken.BarrierToken).ToList();
+            if (boolOcurrs.Count >= 1)
+            {
+                return false;
+            }
+
             if (lt.First().Kind != TipoToken.NumberToken || lt.Last().Kind != TipoToken.NumberToken)
             {
                 return false;
@@ -106,12 +119,15 @@ namespace CompilerFinal
                 {
                     num++;
 
-                    if (i == _tokens.Count - 1)
+                    if (i == lt.Count - 1)
                     {
                         break;
                     }
 
-                    if (lt[i + 1].Kind == TipoToken.PlusToken || lt[i + 1].Kind == TipoToken.MinusToken || lt[i + 1].Kind == TipoToken.StarToken || lt[i + 1].Kind == TipoToken.SlashToken)
+                    if (lt[i + 1].Kind == TipoToken.PlusToken ||
+                        lt[i + 1].Kind == TipoToken.MinusToken ||
+                        lt[i + 1].Kind == TipoToken.StarToken ||
+                        lt[i + 1].Kind == TipoToken.SlashToken)
                     {
                         continue;
                     }
@@ -123,7 +139,10 @@ namespace CompilerFinal
 
                 }
 
-                else if (lt[i].Kind == TipoToken.PlusToken || lt[i].Kind == TipoToken.MinusToken || lt[i].Kind == TipoToken.StarToken || lt[i].Kind == TipoToken.SlashToken)
+                else if (lt[i].Kind == TipoToken.PlusToken ||
+                    lt[i].Kind == TipoToken.MinusToken ||
+                    lt[i].Kind == TipoToken.StarToken ||
+                    lt[i].Kind == TipoToken.SlashToken)
                 {
                     oper++;
 
@@ -167,6 +186,11 @@ namespace CompilerFinal
 
         public bool IsBoolean()
         {
+            if (_tokens.Count == 1 && _tokens[0].Kind == TipoToken.NumberToken)
+            {
+                return false;
+            }
+
             if (_tokens.First().Kind != TipoToken.NumberToken || _tokens.Last().Kind != TipoToken.NumberToken)
             {
                 return false;
@@ -183,7 +207,11 @@ namespace CompilerFinal
                         break;
                     }
 
-                    if (_tokens[i + 1].Kind == TipoToken.EqualToken || _tokens[i + 1].Kind == TipoToken.LessToken || _tokens[i + 1].Kind == TipoToken.GreaterToken || _tokens[i + 1].Kind == TipoToken.AmpersandToken || _tokens[i + 1].Kind == TipoToken.BarrierToken)
+                    if (_tokens[i + 1].Kind == TipoToken.EqualToken ||
+                        _tokens[i + 1].Kind == TipoToken.LessToken ||
+                        _tokens[i + 1].Kind == TipoToken.GreaterToken ||
+                        _tokens[i + 1].Kind == TipoToken.AmpersandToken ||
+                        _tokens[i + 1].Kind == TipoToken.BarrierToken)
                     {
                         continue;
                     }
@@ -278,14 +306,17 @@ namespace CompilerFinal
                         return false;
                     }
                 }
-
             }
-
             return true;
         }
 
         public bool IsBoolean(List<Token> lt)
         {
+            if (lt.Count == 1 && lt[0].Kind == TipoToken.NumberToken)
+            {
+                return false;
+            }
+
             if (lt.First().Kind != TipoToken.NumberToken || lt.Last().Kind != TipoToken.NumberToken)
             {
                 return false;
@@ -302,7 +333,11 @@ namespace CompilerFinal
                         break;
                     }
 
-                    if (lt[i + 1].Kind == TipoToken.EqualToken || lt[i + 1].Kind == TipoToken.LessToken || lt[i + 1].Kind == TipoToken.GreaterToken || lt[i + 1].Kind == TipoToken.AmpersandToken || lt[i + 1].Kind == TipoToken.BarrierToken)
+                    if (lt[i + 1].Kind == TipoToken.EqualToken ||
+                        lt[i + 1].Kind == TipoToken.LessToken ||
+                        lt[i + 1].Kind == TipoToken.GreaterToken ||
+                        lt[i + 1].Kind == TipoToken.AmpersandToken ||
+                        lt[i + 1].Kind == TipoToken.BarrierToken)
                     {
                         continue;
                     }
@@ -413,9 +448,50 @@ namespace CompilerFinal
                     tokens.Add(_tokens[i]);
                 }
 
-                return IsString(tokens) || IsMathOperation(tokens);
+                if (IsString(tokens))
+                    _variableType = 1;
+                if (IsMathOperation(tokens))
+                    _variableType = 2;
+                if (IsBoolean(tokens))
+                    _variableType = 3;
+
+                return true;
             }
             return false;
+        }
+
+        public ExpressionResult Evaluate()
+        {
+            if (IsMathOperation())
+            {
+                return new ExpressionResult(TipoExpression.Numeral);
+            }
+            else if (IsBoolean())
+            {
+                return new ExpressionResult(TipoExpression.Truth);
+            }
+            else if (IsString())
+            {
+                return new ExpressionResult(TipoExpression.Text);
+            }
+            else if (IsVariableDeclaration())
+            {
+                if (_variableType == 1)
+                {
+                    return new ExpressionResult(TipoExpression.TextVariable);
+                }
+
+                if (_variableType == 2)
+                {
+                    return new ExpressionResult(TipoExpression.NumeralVariable);
+                }
+
+                if (_variableType == 3)
+                {
+                    return new ExpressionResult(TipoExpression.TruthVariable);
+                }
+            }
+            return new ExpressionResult(TipoExpression.SyntaxError);
         }
     }
 }
