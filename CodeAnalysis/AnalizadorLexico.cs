@@ -1,4 +1,4 @@
-﻿namespace CompilerFinal
+﻿namespace CompilerFinal.CodeAnalysis
 {
     public class AnalizadorLexico
     {

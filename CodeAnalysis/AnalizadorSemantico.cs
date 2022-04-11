@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text;
 
-namespace CompilerFinal
+namespace CompilerFinal.CodeAnalysis
 {
     public class AnalizadorSemantico
     {
@@ -17,7 +17,10 @@ namespace CompilerFinal
 
         public bool IsMathOperation()
         {
-            var boolOcurrs = _tokens.Where(t => t.Kind == TipoToken.GreaterToken || t.Kind == TipoToken.LessToken || t.Kind == TipoToken.AmpersandToken || t.Kind == TipoToken.BarrierToken).ToList();
+            var boolOcurrs = _tokens.Where(t => t.Kind == TipoToken.GreaterToken ||
+                t.Kind == TipoToken.LessToken ||
+                t.Kind == TipoToken.AmpersandToken ||
+                t.Kind == TipoToken.BarrierToken).ToList();
             if (boolOcurrs.Count >= 1)
             {
                 return false;
@@ -94,7 +97,10 @@ namespace CompilerFinal
         public bool IsMathOperation(List<Token> lt)
         {
 
-            var boolOcurrs = lt.Where(t => t.Kind == TipoToken.GreaterToken || t.Kind == TipoToken.LessToken || t.Kind == TipoToken.AmpersandToken || t.Kind == TipoToken.BarrierToken).ToList();
+            var boolOcurrs = lt.Where(t => t.Kind == TipoToken.GreaterToken ||
+                t.Kind == TipoToken.LessToken ||
+                t.Kind == TipoToken.AmpersandToken ||
+                t.Kind == TipoToken.BarrierToken).ToList();
             if (boolOcurrs.Count >= 1)
             {
                 return false;
