@@ -89,10 +89,6 @@
                     return new Token(TipoToken.StarToken, _position++, "*", null);
                 case '/':
                     return new Token(TipoToken.SlashToken, _position++, "/", null);
-                case '(':
-                    return new Token(TipoToken.OpenParenToken, _position++, "(", null);
-                case ')':
-                    return new Token(TipoToken.CloseParenToken, _position++, ")", null);
                 case '=':
                     return new Token(TipoToken.EqualToken, _position++, "=", null);
                 case '<':
