@@ -38,7 +38,7 @@ namespace CompilerFinal
 
             for (int i = 0; i < _tokens.Count; i++)
             {
-                if(_tokens[i].Kind == TipoToken.NumberToken)
+                if (_tokens[i].Kind == TipoToken.NumberToken)
                 {
                     num++;
 
@@ -55,11 +55,11 @@ namespace CompilerFinal
                     else
                     {
                         break;
-                    }  
-                        
+                    }
+
                 }
 
-                else if(_tokens[i].Kind == TipoToken.PlusToken || _tokens[i].Kind == TipoToken.MinusToken || _tokens[i].Kind == TipoToken.StarToken || _tokens[i].Kind == TipoToken.SlashToken)
+                else if (_tokens[i].Kind == TipoToken.PlusToken || _tokens[i].Kind == TipoToken.MinusToken || _tokens[i].Kind == TipoToken.StarToken || _tokens[i].Kind == TipoToken.SlashToken)
                 {
                     oper++;
 
@@ -76,8 +76,8 @@ namespace CompilerFinal
                 }
 
             }
-            
-            if(num == oper + 1)
+
+            if (num == oper + 1)
             {
                 return true;
             }
@@ -165,7 +165,7 @@ namespace CompilerFinal
             return stringBuilder.ToString()[0] == '"' && stringBuilder.ToString()[stringBuilder.Length - 1] == '"';
         }
 
-        public bool isBoolean()
+        public bool IsBoolean()
         {
             if (_tokens.First().Kind != TipoToken.NumberToken || _tokens.Last().Kind != TipoToken.NumberToken)
             {
@@ -176,7 +176,7 @@ namespace CompilerFinal
 
             for (int i = 0; i < _tokens.Count; i++)
             {
-                if(_tokens[i].Kind == TipoToken.NumberToken)
+                if (_tokens[i].Kind == TipoToken.NumberToken)
                 {
                     if (i == _tokens.Count - 1)
                     {
@@ -197,7 +197,7 @@ namespace CompilerFinal
 
                 else if (_tokens[i].Kind == TipoToken.AmpersandToken)
                 {
-                    if(_tokens[i + 1].Kind == TipoToken.NumberToken)
+                    if (_tokens[i + 1].Kind == TipoToken.NumberToken)
                     {
                         continue;
                     }
@@ -208,7 +208,7 @@ namespace CompilerFinal
                     }
                 }
 
-                else if(_tokens[i].Kind == TipoToken.BarrierToken)
+                else if (_tokens[i].Kind == TipoToken.BarrierToken)
                 {
                     if (_tokens[i + 1].Kind == TipoToken.NumberToken)
                     {
@@ -221,9 +221,9 @@ namespace CompilerFinal
                     }
                 }
 
-                else if(_tokens[i].Kind == TipoToken.GreaterToken)
+                else if (_tokens[i].Kind == TipoToken.GreaterToken)
                 {
-                    if(_tokens[i + 1].Kind  == TipoToken.EqualToken)
+                    if (_tokens[i + 1].Kind == TipoToken.EqualToken)
                     {
                         equalToken++;
                         continue;
@@ -259,15 +259,15 @@ namespace CompilerFinal
                     }
                 }
 
-                else if(_tokens[i].Kind == TipoToken.EqualToken)
+                else if (_tokens[i].Kind == TipoToken.EqualToken)
                 {
-                    if(_tokens[i + 1].Kind == TipoToken.NumberToken && equalToken == 1)
+                    if (_tokens[i + 1].Kind == TipoToken.NumberToken && equalToken == 1)
                     {
                         equalToken = 0;
                         continue;
                     }
 
-                    else if(_tokens[i + 1].Kind == TipoToken.EqualToken)
+                    else if (_tokens[i + 1].Kind == TipoToken.EqualToken)
                     {
                         equalToken++;
                         continue;
@@ -284,7 +284,7 @@ namespace CompilerFinal
             return true;
         }
 
-        public bool isBoolean(List<Token> lt)
+        public bool IsBoolean(List<Token> lt)
         {
             if (lt.First().Kind != TipoToken.NumberToken || lt.Last().Kind != TipoToken.NumberToken)
             {
