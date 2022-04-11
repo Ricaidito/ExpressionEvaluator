@@ -37,7 +37,7 @@ namespace CompilerFinal
             }
 
             var analizador = new AnalizadorSemantico(lt);
-            Console.WriteLine(analizador.IsVariableDeclaration());
+            Console.WriteLine(analizador.isBoolean());
 
             //if (lt[0].Kind == TipoToken.NumberToken && lt[2].Kind == TipoToken.PlusToken && lt[4].Kind == TipoToken.NumberToken)
             //{
